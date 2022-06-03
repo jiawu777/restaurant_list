@@ -12,9 +12,10 @@
 ```
 git clone https://github.com/jiawu777/restaurant_list.git
 ```
-* 下載npm 執行
+* 下載npm、express、express-handlebars 執行
 ```
 npm init -y
+npm i express express-handlebars
 ```
 
 * 執行app.js
