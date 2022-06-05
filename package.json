@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^6.3.5"
   },
   "name": "restaurant_list",
   "version": "1.0.0",
