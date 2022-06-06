@@ -44,6 +44,10 @@ app.get('/', (req, res) => {
         .catch(error => console.error(error))
 })
 
+//新增new頁面
+app.get('/restaurants/new',(req,res)=>{
+    res.render('new')
+})
 
 /*app.get('/restaurants/:restaurantId', (req, res) => {
     const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurantId)
