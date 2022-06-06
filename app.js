@@ -1,4 +1,5 @@
-//const restaurantList = require('')
+//載入Restaurant Model
+const Restaurant = require('./models/restaurant')
 
 //載入express功能
 const express = require('express')
@@ -31,13 +32,19 @@ db.once('open', () => {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-//設定靜態檔案
+//設定靜態檔案(未更動)
 app.use(express.static('public'))
 
-//設定路由根目錄
+
+//瀏覽所有餐廳(首頁)
 app.get('/', (req, res) => {
-    res.render('index')
+    Restaurant.find()
+        .lean()
+        .then(restaurants => res.render('index', { restaurants }))
+        .catch(error => console.error(error))
 })
+
+
 /*app.get('/restaurants/:restaurantId', (req, res) => {
     const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurantId)
     res.render('show', { restaurant: restaurant })
