@@ -1,6 +1,3 @@
-//呼叫json資料庫
-const restaurantList = require('./restaurant.json')
-
 //呼叫Mongoose資料庫
 const mongoose = require('mongoose')
 
@@ -13,7 +10,6 @@ const restaurantSchema = new Schema({
     },
     name: {
         type: String,
-        required: true
     },
     name_en: {
         type: String,
@@ -22,7 +18,7 @@ const restaurantSchema = new Schema({
         type: String,
     },
     image: {
-        type: URL,
+        type: String,
     },
     location: {
         type: String,
@@ -31,7 +27,7 @@ const restaurantSchema = new Schema({
         type: String,
     },
     google_map: {
-        type: URL,
+        type: String,
     },
     rating: {
         type: Number,
