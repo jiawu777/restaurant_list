@@ -1,14 +1,12 @@
-
+//const restaurantList = require('')
 
 //載入express功能
 const express = require('express')
 const app = express()
 const port = 3000
 
-//呼叫樣板引擎express-handlebars
+//呼叫樣板引擎express-hbs
 const exphbs = require('express-handlebars')
-
-
 
 //呼叫Mongoose資料庫
 const mongoose = require('mongoose')
@@ -30,17 +28,17 @@ db.once('open', () => {
 })
 
 //設定模板引擎
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
 
 //設定靜態檔案
 app.use(express.static('public'))
 
 //設定路由根目錄
 app.get('/', (req, res) => {
-    res.render('index', { restaurants: restaurantList.results })
+    res.render('index')
 })
-app.get('/restaurants/:restaurantId', (req, res) => {
+/*app.get('/restaurants/:restaurantId', (req, res) => {
     const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurantId)
     res.render('show', { restaurant: restaurant })
 })
@@ -51,7 +49,7 @@ app.get('/search', (req, res) => {
         return restaurant.name.toLowerCase().includes(keyword)
     })
     res.render('index', { restaurants: restaurants, keyword: keyword })
-})
+})*/
 //接收server
 app.listen(port, () => {
     console.log(`Express is running on http://localhost:${port}`)
