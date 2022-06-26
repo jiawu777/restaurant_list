@@ -1,3 +1,6 @@
+//載入body-parse把URL-encoded轉譯成req.body物件
+const bodyParser = require('body-parser')
+
 //載入Restaurant Model
 const Restaurant = require('./models/restaurant')
 
@@ -35,6 +38,8 @@ app.set('view engine', 'hbs')
 //設定靜態檔案(未更動)
 app.use(express.static('public'))
 
+//用app.use規定每筆請求都需要透過body-parser進行前置處理
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //瀏覽所有餐廳(首頁)
 app.get('/', (req, res) => {
@@ -45,8 +50,17 @@ app.get('/', (req, res) => {
 })
 
 //新增new頁面
-app.get('/restaurants/new',(req,res)=>{
+app.get('/restaurants/new', (req, res) => {
     res.render('new')
+})
+
+//新增一筆餐廳資料
+app.post('/restaurants', (req, res) => {
+    console.log(req.body)
+    Restaurant.create(req.body)
+        .then(() => res.redirect('/'))
+        .catch(error => console.error(error))
+
 })
 
 /*app.get('/restaurants/:restaurantId', (req, res) => {
