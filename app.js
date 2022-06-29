@@ -63,6 +63,8 @@ app.post('/restaurants', (req, res) => {
 
 })
 
+//瀏覽特定資料
+
 /*app.get('/restaurants/:restaurantId', (req, res) => {
     const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurantId)
     res.render('show', { restaurant: restaurant })
