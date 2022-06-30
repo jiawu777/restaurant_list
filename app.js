@@ -14,6 +14,7 @@ const exphbs = require('express-handlebars')
 
 //呼叫Mongoose資料庫
 const mongoose = require('mongoose')
+const restaurant = require('./models/restaurant')
 
 //mongoose連線
 mongoose.connect(process.env.MONGODB_URI)
@@ -64,15 +65,36 @@ app.post('/restaurants', (req, res) => {
 })
 
 //瀏覽特定資料
-
 app.get('/restaurants/:id', (req, res) => {
     const id = req.params.id
     return Restaurant.findById(id)
         .lean()
-        .then((restaurant) => res.render('show', { restaurant }))
+        .then((restaurant) => res.render('detail', { restaurant }))
         .catch(error => console.error(error))
 
 })
+
+//修改特定資料
+
+//進入edit頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+    const id = req.params.id
+    return Restaurant.findById(id)
+        .lean()
+        .then((restaurant) => res.render('edit', { restaurant }))
+        .catch(error => console.error(error))
+
+})
+//上傳修改資料
+/*
+app.post('/restaurants/:id/edit', (req, res) => {
+    const editItem = req.body
+    const id = req.params.id
+    return Restaurant.findById(id)
+        .then(editItem =>
+            restaurant.editItem)
+})*/
+
 /*
 //search功能get
 app.get('/search', (req, res) => {
