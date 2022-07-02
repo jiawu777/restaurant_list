@@ -86,6 +86,12 @@ app.get('/restaurants/:id/edit', (req, res) => {
 
 })
 //上傳修改資料
+app.post('/restaurants/:id/edit', (req, res) => {
+    const id = req.params.id
+    return Restaurant.findByIdAndUpdate(id, req.body)
+        .then((restaurant) => res.redirect(`/restaurants/${id}`))
+        .catch(error => console.error(error))
+})
 /*
 app.post('/restaurants/:id/edit', (req, res) => {
     const editItem = req.body
