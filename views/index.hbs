@@ -43,13 +43,13 @@
                                         <i class="fas fa-star fa-xs"></i>
                                     </span>
                                 </div>
-                                <div class="btn-group btn-group-sm align-items-start" role="group"
-                                    aria-label="Basic outlined example">
-
-                                    <a href="./restaurants/{{this._id}}" class="btn btn-outline-info">Detail</a>
+                                <div class="d-flex align-items-start" role="group" aria-label="Basic outlined example">
+                                    <a href="./restaurants/{{this._id}}" class="btn btn-outline-info btn-sm">Detail</a>
                                     <a href="./restaurants/{{this._id}}/edit"
-                                        class="btn btn-outline-success mx-1">Edit</a>
-                                    <a href="" class="btn btn-outline-danger ">Delete</a>
+                                        class="btn btn-outline-success mx-1 btn-sm">Edit</a>
+                                    <form action="./restaurants/{{this._id}}/delete" method="post">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                    </form>
                                 </div>
                             </div>
                             <span>

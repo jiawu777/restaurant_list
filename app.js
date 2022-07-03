@@ -92,6 +92,15 @@ app.post('/restaurants/:id/edit', (req, res) => {
         .then((restaurant) => res.redirect(`/restaurants/${id}`))
         .catch(error => console.error(error))
 })
+
+//刪除資料
+app.post('/restaurants/:id/delete', (req, res) => {
+    const id = req.params.id
+    return Restaurant.findById(id)
+        .then(restaurant => restaurant.remove())
+        .then(() => res.redirect('/'))
+        .catch(error => console.error(error))
+})
 /*
 app.post('/restaurants/:id/edit', (req, res) => {
     const editItem = req.body
