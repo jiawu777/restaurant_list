@@ -1,4 +1,4 @@
-![image](https://github.com/lexsaints/powershell/blob/master/IMG/ps2.png)
+![image](https://github.com/jiawu777/restaurant_list/blob/main/A7.png)
 
 # Title 我的餐廳清單
 
@@ -18,6 +18,16 @@ npm init -y
 npm i express express-handlebars
 ```
 
+* 登入mongodb資料庫
+process.env.MONGODB_URI 環境變數的設定
+```
+set MONGODB_URI = <連線 mongoDB的URI> //密碼、資料庫名稱請自行修改
+```
+* 運行種子數據
+```
+node models/seeds/restaurantSeeder.js
+```
+
 * 執行app.js
 
 ```
@@ -27,8 +37,6 @@ nodemon app.js
 ```
 Express is running on http://localhost:3000
 ```
-
-* 於搜尋欄輸入字串可查找餐廳
 
 * 點餐廳卡片可獲得詳細說明
 ### Environment - 開發環境
