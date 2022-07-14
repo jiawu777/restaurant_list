@@ -1,8 +1,13 @@
 //載入body-parse把URL-encoded轉譯成req.body物件
 const bodyParser = require('body-parser')
 
+//載入method override
+const methodOverride = require('method-override')
+
 //載入Restaurant Model
 const Restaurant = require('./models/restaurant')
+
+
 
 //載入express功能
 const express = require('express')
@@ -12,25 +17,11 @@ const port = 3000
 //呼叫樣板引擎express-hbs
 const exphbs = require('express-handlebars')
 
-//呼叫Mongoose資料庫
-const mongoose = require('mongoose')
+//取用資料庫
 const restaurant = require('./models/restaurant')
 
-//mongoose連線
-mongoose.connect(process.env.MONGODB_URI)
-
-//設定mongoose連線狀態
-const db = mongoose.connection
-
-//連線失敗
-db.on('error', () => {
-    console.log('mongoose error!')
-})
-
-//連線成功
-db.once('open', () => {
-    console.log('mongoose connected!')
-})
+//載入mongoose
+require('./config/mongoose')
 
 //設定模板引擎
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
@@ -42,13 +33,8 @@ app.use(express.static('public'))
 //用app.use規定每筆請求都需要透過body-parser進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//瀏覽所有餐廳(首頁)
-app.get('/', (req, res) => {
-    Restaurant.find()
-        .lean()
-        .then(restaurants => res.render('index', { restaurants }))
-        .catch(error => console.error(error))
-})
+//用app.use先跑 method override(function) 跑路由，只要網址帶有_method參數，就可以使用http方法(可用POST跟DELETE)呼叫
+app.use(methodOverride('_method'))
 
 //新增new頁面
 app.get('/restaurants/new', (req, res) => {
