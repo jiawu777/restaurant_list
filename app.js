@@ -43,14 +43,17 @@ app.get('/search', (req, res) => {
     const keyword = req.query.keyword.toLowerCase().trim()
     const filteredRestaurants = restaurantList.filter(item => item.name.toLowerCase().includes(keyword) || item.category.includes(keyword))
 
-    /*//搜尋結果無法跳出彈出視窗，問題點在這
+    //搜尋結果無法跳出彈出視窗，問題點在這
     if (!filteredRestaurants.length) {
-        const noSearchResult = `查無相關結果`
-        res.render('index', { alert: noSearchResult, restaurants: restaurantList, keyword: keyword })
+        /*查無結果提示方法1:在頁面顯示提示字元，可帶入搜尋關鍵字*/
+        const noSearchResult = `▼▼▼ 以 ${keyword} 搜尋查無相關餐廳，想來點其他美食嗎 ▼▼▼`
+        /*res.render('index', { alert: noSearchResult, restaurants: restaurantList, keyword: keyword })*/
+
+        /*查無結果提示方法2:透過頁面彈出訊息提示無搜尋結果，無法帶入搜尋關鍵字*/
+        res.send("<script>alert(`查無相關餐廳，點擊「確定」返回首頁`);window.location.href = `http://localhost:3000/`;</script>");
     } else {
         res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
-    }*/
-    res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
+    }
 })
 
 //接收server
