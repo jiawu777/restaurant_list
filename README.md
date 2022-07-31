@@ -46,8 +46,8 @@ Express is running on http://localhost:3000
 
 ## package - 使用套件
 
-* express v4.16.4
-* express - handlebars v3.0.0
+* express v4.17.1
+* express - handlebars v4.0.2
 * bootstrap v4.6.x
 
 ## Authors
