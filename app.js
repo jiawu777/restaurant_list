@@ -1,3 +1,6 @@
+//呼叫mongoose
+const mongoose = require('mongoose')
+
 //載入body-parse把URL-encoded轉譯成req.body物件
 const bodyParser = require('body-parser')
 
@@ -5,12 +8,29 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
 //載入Restaurant Model
-const restaurantList = require('./restaurant.json').results
+const Restaurant = require('./models/restaurant')
 
 //載入express功能
 const express = require('express')
 const app = express()
 const port = 3000
+
+//連線到mongoose
+mongoose.connect(process.env.MONGODB_URI)
+
+//設定mongoose連線狀態
+const db = mongoose.connection
+
+//連線失敗
+db.on('error', () => {
+    console.log('mongoose error!')
+})
+
+//連線成功
+db.once('open', () => {
+    console.log('mongoose connected!')
+})
+
 
 //呼叫樣板引擎express-hbs
 const exphbs = require('express-handlebars')
@@ -27,27 +47,46 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //顯示首頁
 app.get('/', (req, res) => {
-    res.render('index', { restaurants: restaurantList })
+    Restaurant.find()
+        .lean()
+        .then(restaurants => res.render('index', { restaurants }))
+        .catch(error => console.error(error))
+
+})
+
+//連線到新增頁面
+app.get('/restaurants/new', (req, res) => {
+    return res.render('new')
+})
+
+//新增一筆資料
+app.post('/restaurants', (req, res) => {
+    const restaurant = new Restaurant(req.body)
+    return restaurant.save()
+        .then(() => res.redirect('/'))
+        .catch(error => console.error(error))
 })
 
 //瀏覽特定資料
-app.get('/restaurants/:restaurantId', (req, res) => {
-    const restaurant = restaurantList.find(restaurant => restaurant.id.toString() === req.params.restaurantId)
-    res.render('detail', { restaurant: restaurant })
-
+app.get('/restaurants/:id', (req, res) => {
+    const id = req.params.id
+    return Restaurant.findById(id)
+        .lean()
+        .then(restaurant => res.render('detail', { restaurant }))
+        .catch(error => console.error(error))
 })
 
 //search功能get
 app.get('/search', (req, res) => {
 
     const keyword = req.query.keyword.toLowerCase().trim()
-    const filteredRestaurants = restaurantList.filter(item => item.name.toLowerCase().includes(keyword) || item.category.includes(keyword))
+    const filteredRestaurants = Restaurant.filter(item => item.name.toLowerCase().includes(keyword) || item.category.includes(keyword))
 
     //搜尋結果無法跳出彈出視窗，問題點在這
     if (!filteredRestaurants.length) {
         /*查無結果提示方法1:在頁面顯示提示字元，可帶入搜尋關鍵字*/
         const noSearchResult = `▼▼▼ 以 ${keyword} 搜尋查無相關餐廳，想來點其他美食嗎 ▼▼▼`
-        /*res.render('index', { alert: noSearchResult, restaurants: restaurantList, keyword: keyword })*/
+        /*res.render('index', { alert: noSearchResult, restaurants: Restaurant, keyword: keyword })*/
 
         /*查無結果提示方法2:透過頁面彈出訊息提示無搜尋結果，無法帶入搜尋關鍵字*/
         res.send("<script>alert(`查無相關餐廳，點擊「確定」返回首頁`);window.location.href = `http://localhost:3000/`;</script>");
