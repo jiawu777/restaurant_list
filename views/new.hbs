@@ -25,8 +25,10 @@
                     required />
             </div>
             <div class="mb-3">
+                <!--修正type為tel，新增pattern -->
                 <label for="phone" class="form-label">PHONE</label>
-                <input type="text" class="form-control" id="phone" placeholder="02 2570 1255" name="phone" required />
+                <input type="tel" pattern="[0-9]{2} [0-9]{4} [0-9]{4}" class="form-control" id="phone"
+                    placeholder="02 2570 1255" name="phone" required />
             </div>
             <div class="mb-3">
                 <label for="google_map" class="form-label">GOOGLE MAP LINK</label>
@@ -35,7 +37,9 @@
             </div>
             <div class="mb-3">
                 <label for="rating" class="form-label">RATING</label>
-                <input type="text" class="form-control" id="rating" placeholder="4.7" name="rating" required />
+                <!--修正type為number，新增範圍值max與min，並設定step為0.1-->
+                <input type="number" min="0.0" max="5.0" step="0.1" class="form-control" id="rating" placeholder="4.7"
+                    name="rating" required />
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">DESCRIPTION</label>

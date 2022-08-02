@@ -95,10 +95,19 @@ app.post('/restaurants/:id/edit', (req, res) => {
         .catch(error => console.error(error))
 })
 
+/*function alert(message) {
+    switch (message) {
+        case deleteCheck:
+            window.prompt("是否確定刪除本筆資料?")
+    }
+}*/
+
+
 //刪除特定資料
 app.post('/restaurants/:id/delete', (req, res) => {
     const id = req.params.id
-    return Restaurant.findByIdAndRemove(id)
+    return Restaurant.findById(id)
+        .then((restaurant) => restaurant.remove())
         .then(() => res.redirect('/'))
         .catch(error => console.error(error))
 })
