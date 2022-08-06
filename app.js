@@ -95,14 +95,6 @@ app.post('/restaurants/:id/edit', (req, res) => {
         .catch(error => console.error(error))
 })
 
-/*function alert(message) {
-    switch (message) {
-        case deleteCheck:
-            window.prompt("是否確定刪除本筆資料?")
-    }
-}*/
-
-
 //刪除特定資料
 app.post('/restaurants/:id/delete', (req, res) => {
     const id = req.params.id
@@ -112,25 +104,42 @@ app.post('/restaurants/:id/delete', (req, res) => {
         .catch(error => console.error(error))
 })
 
+// 搜尋餐廳
+//app.get('/search', (req, res) => {
+//    const keyword = req.query.keyword
+//  const noResultMessage = '查無資料，請更換關鍵字或點擊放大鏡回到首頁'
+//
+//  Restaurant.find()
+//    .lean()
+//  .then(restaurants => {
+//    const searchedRestaurants = restaurants.filter((restaurant) => {
+//      return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+//})
+
+// 根據搜尋結果渲染頁面
+//searchedRestaurants.length ? res.render('index', { restaurants: searchedRestaurants, keyword: keyword }) : res.render('index', { noResultMessage: noResultMessage, keyword: keyword })
+//})
+//.catch(error => console.log(error))
+//})
 
 //search功能get
-//app.get('/search', (req, res) => {
-//
-//    const keyword = req.query.keyword.toLowerCase().trim()
-//    const filteredRestaurants = Restaurant.filter(item => item.name.toLowerCase().includes(keyword) || item.category.includes(keyword))
-//
-//    //搜尋結果無法跳出彈出視窗，問題點在這
-//    if (!filteredRestaurants.length) {
-//        /*查無結果提示方法1:在頁面顯示提示字元，可帶入搜尋關鍵字*/
-//        const noSearchResult = `▼▼▼ 以 ${keyword} 搜尋查無相關餐廳，想來點其他美食嗎 ▼▼▼`
-//        /*res.render('index', { alert: noSearchResult, restaurants: Restaurant, keyword: keyword })*/
-//
-//        /*查無結果提示方法2:透過頁面彈出訊息提示無搜尋結果，無法帶入搜尋關鍵字*/
-//        res.send("<script>alert(`查無相關餐廳，點擊「確定」返回首頁`);window.location.href = `http://localhost:3000/`;</script>");
-//    } else {
-//        res.render('index', { restaurants: filteredRestaurants, keyword: keyword })
-//    }
-//})
+app.get('/search', (req, res) => {
+
+    const keyword = req.query.keyword
+    const noResultMessage = "查無資料，請更換關鍵字或點擊放大鏡回到首頁"
+    Restaurant.find()
+        .lean()
+        .then(restaurants => {
+            const filteredRestaurants = restaurants.filter((item) => {
+                return item.name.includes(keyword.toLowerCase()) || item.category.includes(keyword.toLowerCase())
+            })
+            filteredRestaurants.length ? res.render('index', { restaurants: filteredRestaurants, keyword: keyword }) : res.render('index', { noResultMessage, keyword })
+        })
+
+
+
+        .catch(error => console.error(error))
+})
 
 //接收server
 app.listen(port, () => {
