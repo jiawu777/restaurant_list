@@ -104,34 +104,18 @@ app.post('/restaurants/:id/delete', (req, res) => {
         .catch(error => console.error(error))
 })
 
-// 搜尋餐廳
-//app.get('/search', (req, res) => {
-//    const keyword = req.query.keyword
-//  const noResultMessage = '查無資料，請更換關鍵字或點擊放大鏡回到首頁'
-//
-//  Restaurant.find()
-//    .lean()
-//  .then(restaurants => {
-//    const searchedRestaurants = restaurants.filter((restaurant) => {
-//      return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-//})
-
-// 根據搜尋結果渲染頁面
-//searchedRestaurants.length ? res.render('index', { restaurants: searchedRestaurants, keyword: keyword }) : res.render('index', { noResultMessage: noResultMessage, keyword: keyword })
-//})
-//.catch(error => console.log(error))
-//})
 
 //search功能get
 app.get('/search', (req, res) => {
 
-    const keyword = req.query.keyword
+    const keyword = req.query.keyword.trim().toLowerCase()
+    console.log(keyword)
     const noResultMessage = "查無資料，請更換關鍵字或點擊放大鏡回到首頁"
     Restaurant.find()
         .lean()
         .then(restaurants => {
             const filteredRestaurants = restaurants.filter((item) => {
-                return item.name.includes(keyword.toLowerCase()) || item.category.includes(keyword.toLowerCase())
+                return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword)
             })
             filteredRestaurants.length ? res.render('index', { restaurants: filteredRestaurants, keyword: keyword }) : res.render('index', { noResultMessage, keyword })
         })
