@@ -1,27 +1,4 @@
-<!-- search bar -->
-<div class="container search-bar">
-    <div class="search-bar-outer">
-        <div class="search-bar-inner">
-            <form action="/search">
-                <h4 class="mb-2">尋找餐廳：</h4>
-                <div class="input-group">
-                    <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類"
-                        aria-label="Restaurant Name..." value="" aria-describedby="search-button">
-                    <div class="input-group-append">
-                        <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i>
-                        </button>
-                        <!--修正點擊 ADD NEW RESTAURANT 時，要點文字才能新增餐廳，點文字外的按鈕區域範圍內，會跳 not found-->
-                        <a class="btn btn-major mx-2" href="./restaurants/new" style="color:white;">ADD NEW
-                            RESTAURANT
-                        </a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- 查無資料訊息 -->
+<!--查無資料訊息-->
 <div class="container mt-5">
     <h2 class="text-center"> {{noResultMessage}} </h2>
 </div>
@@ -30,6 +7,34 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-10 col-12 mx-auto">
+            <div class="d-flex justify-content-between mb-4">
+                <!-- search bar -->
+                <form action="/search">
+                    <div class="input-group ">
+                        <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類"
+                            aria-label="Restaurant Name..." value="" aria-describedby="search-button">
+                        <div class="input-group-append">
+                            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!--新增下拉式選單供排序 ADD NEW RESTAURANT 時，要點文字才能新增餐廳，點文字外的按鈕區域範圍內，會跳 not found-->
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="true">
+                        Dropdown button
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
             <div class="card-columns">
                 {{#each restaurants}}
                 <a href="/restaurants/{{this._id}}" class="text-secondary">
@@ -53,7 +58,7 @@
                                     <a href="./restaurants/{{this._id}}" class="btn btn-outline-info btn-sm">Detail</a>
                                     <a href="./restaurants/{{this._id}}/edit"
                                         class="btn btn-outline-success mx-1 btn-sm">Edit</a>
-                                    <form action="./restaurants/{{this._id}}/delete" method="post">
+                                    <form action="./restaurants/{{this._id}}?_method=DELETE" method="POST">
                                         <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                                     </form>
                                 </div>

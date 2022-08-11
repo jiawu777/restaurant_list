@@ -46,10 +46,14 @@ app.use(express.static('public'))
 //用app.use規定每筆請求都需要透過body-parser進行前置處理
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//用methodOverride把程式碼Restful化
+app.use(methodOverride('_method'))
+
 //顯示首頁
 app.get('/', (req, res) => {
     Restaurant.find()
         .lean()
+        .sort({ name: 'asc' })
         .then(restaurants => res.render('index', { restaurants }))
         .catch(error => console.error(error))
 
@@ -77,7 +81,7 @@ app.get('/restaurants/:id', (req, res) => {
         .catch(error => console.error(error))
 })
 
-//顯示特定資料頁面
+//顯示特定資料編輯頁面
 app.get('/restaurants/:id/edit', (req, res) => {
     const id = req.params.id
     return Restaurant.findById(id)
@@ -87,7 +91,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 //修改特定資料
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id', (req, res) => {
     const id = req.params.id
     return Restaurant.findByIdAndUpdate(id, req.body)
         .then(restaurant => { return restaurant.save() })
@@ -96,7 +100,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 })
 
 //刪除特定資料
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
     const id = req.params.id
     return Restaurant.findById(id)
         .then((restaurant) => restaurant.remove())
@@ -107,9 +111,10 @@ app.post('/restaurants/:id/delete', (req, res) => {
 
 //search功能get
 app.get('/search', (req, res) => {
-
+    if (!req.query.keyword) {
+        res.redirect('/')
+    }
     const keyword = req.query.keyword.trim().toLowerCase()
-    console.log(keyword)
     const noResultMessage = "查無資料，請更換關鍵字或點擊放大鏡回到首頁"
     Restaurant.find()
         .lean()
@@ -119,8 +124,6 @@ app.get('/search', (req, res) => {
             })
             filteredRestaurants.length ? res.render('index', { restaurants: filteredRestaurants, keyword: keyword }) : res.render('index', { noResultMessage, keyword })
         })
-
-
 
         .catch(error => console.error(error))
 })

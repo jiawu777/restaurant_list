@@ -11,18 +11,20 @@
     <script src="https://kit.fontawesome.com/9f6125b92b.js" crossorigin="anonymous"></script>
 </head>
 
-
 <body>
     <header>
         <!-- navigation -->
         <nav class="navbar navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="/">
-                    <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
-                        width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
-                    我的餐廳清單
-                </a>
-            </div>
+            <!--<div class="container">-->
+            <a class="navbar-brand" href="/">
+                <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
+                    width="30" height="30" class="d-inline-block align-top" alt="我的餐廳清單">
+                我的餐廳清單
+            </a>
+            <!--修正點擊 ADD NEW RESTAURANT 時，要點文字才能新增餐廳，點文字外的按鈕區域範圍內，會跳 not found-->
+            <a class="btn btn-major mx-2" href="./restaurants/new" style="color:white;">CREATE
+            </a>
+            <!--</div>-->
         </nav>
 
         <div class="banner"></div>
@@ -30,8 +32,8 @@
     <!-- partial templates will replace the part of "body" here -->
     {{{ body }}}
     <!--載入javascripts，popper要在bootstrap上面因為會用到-->
-    <script src="/javascripts/popper.js"></script>
-    <script src="/javascripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/javascripts/popper.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.js"></script>
 
 </body>
 

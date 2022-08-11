@@ -38,8 +38,8 @@
                 style="max-width: 600px;">
             <div class="d-flex flex-row-reverse mb-4" role="group" aria-label="Basic outlined example">
                 <a href="/" class="btn btn-outline-secondary float-right">Back</a>
-                <a href="/restaurants/{{restaurant._id}}/edit" class="btn btn-outline-success float-right mx-2">Edit</a>
-                <form action="/restaurants/{{restaurant._id}}/delete" method="post">
+                <a href="/restaurants/{{restaurant._id}}" class="btn btn-outline-success float-right mx-2">Edit</a>
+                <form action="/restaurants/{{restaurant._id}}?_method=DELETE" method="POST">
                     <button type="submit" class="btn btn-outline-danger">Delete</button>
                 </form>
             </div>
