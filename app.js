@@ -9,7 +9,7 @@ const methodOverride = require('method-override')
 
 //載入Restaurant Model
 const Restaurant = require('./models/restaurant')
-
+const routes = require('./routes')//預設直接找index可省略
 //載入express功能
 const express = require('express')
 const app = express()
@@ -31,10 +31,8 @@ db.once('open', () => {
     console.log('mongoose connected!')
 })
 
-
 //呼叫樣板引擎express-hbs
 const exphbs = require('express-handlebars')
-const { findByIdAndUpdate } = require('./models/restaurant')
 
 //設定模板引擎
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
@@ -49,84 +47,12 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //用methodOverride把程式碼Restful化
 app.use(methodOverride('_method'))
 
-//顯示首頁
-app.get('/', (req, res) => {
-    Restaurant.find()
-        .lean()
-        .sort({ name: 'asc' })
-        .then(restaurants => res.render('index', { restaurants }))
-        .catch(error => console.error(error))
-
-})
-
-//連線到新增頁面
-app.get('/restaurants/new', (req, res) => {
-    return res.render('new')
-})
-
-//新增一筆資料
-app.post('/restaurants', (req, res) => {
-    const restaurant = new Restaurant(req.body)
-    return restaurant.save()
-        .then(() => res.redirect('/'))
-        .catch(error => console.error(error))
-})
-
-//瀏覽特定資料
-app.get('/restaurants/:id', (req, res) => {
-    const id = req.params.id
-    return Restaurant.findById(id)
-        .lean()
-        .then(restaurant => res.render('detail', { restaurant }))
-        .catch(error => console.error(error))
-})
-
-//顯示特定資料編輯頁面
-app.get('/restaurants/:id/edit', (req, res) => {
-    const id = req.params.id
-    return Restaurant.findById(id)
-        .lean()
-        .then(restaurant => res.render('edit', { restaurant }))
-        .catch(error => console.error(error))
-})
-
-//修改特定資料
-app.put('/restaurants/:id', (req, res) => {
-    const id = req.params.id
-    return Restaurant.findByIdAndUpdate(id, req.body)
-        .then(restaurant => { return restaurant.save() })
-        .then(() => res.redirect(`/restaurants/${id}/`))
-        .catch(error => console.error(error))
-})
-
-//刪除特定資料
-app.delete('/restaurants/:id', (req, res) => {
-    const id = req.params.id
-    return Restaurant.findById(id)
-        .then((restaurant) => restaurant.remove())
-        .then(() => res.redirect('/'))
-        .catch(error => console.error(error))
-})
+//使用路由器
+app.use(routes)
 
 
-//search功能get
-app.get('/search', (req, res) => {
-    if (!req.query.keyword) {
-        res.redirect('/')
-    }
-    const keyword = req.query.keyword.trim().toLowerCase()
-    const noResultMessage = "查無資料，請更換關鍵字或點擊放大鏡回到首頁"
-    Restaurant.find()
-        .lean()
-        .then(restaurants => {
-            const filteredRestaurants = restaurants.filter((item) => {
-                return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword)
-            })
-            filteredRestaurants.length ? res.render('index', { restaurants: filteredRestaurants, keyword: keyword }) : res.render('index', { noResultMessage, keyword })
-        })
 
-        .catch(error => console.error(error))
-})
+
 
 //接收server
 app.listen(port, () => {
