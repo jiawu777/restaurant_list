@@ -1,8 +1,3 @@
-
-
-
-
-
 //載入express功能
 const express = require('express')
 const exphbs = require('express-handlebars')//呼叫樣板引擎express-hbs
