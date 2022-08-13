@@ -12,29 +12,14 @@ const methodOverride = require('method-override')//載入method override
 const routes = require('./routes')//預設直接找index可省略
 require('./config/mongoose')//載入mongoose
 
-
 const app = express()
 
-
-//設定模板引擎
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.use(express.static('public'))//設定靜態檔案(未更動)
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))//設定模板引擎
 app.set('view engine', 'hbs')
-
-
-//用app.use規定每筆請求都需要透過body-parser進行前置處理
-app.use(bodyParser.urlencoded({ extended: true }))
-
-//用methodOverride把程式碼Restful化
-app.use(methodOverride('_method'))
-
-//設定靜態檔案(未更動)
-app.use(express.static('public'))
-
-
-//使用路由器
-app.use(routes)
-
-//接收server
+app.use(bodyParser.urlencoded({ extended: true }))//用app.use規定每筆請求都需要透過body-parser進行前置處理
+app.use(methodOverride('_method'))//用methodOverride把程式碼Restful化
+app.use(routes)//使用路由器
 app.listen(3000, () => {
     console.log(`Express is running on http://localhost:3000`)
-})
+})//接收server

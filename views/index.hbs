@@ -22,16 +22,18 @@
 
                 <!--新增下拉式選單供排序 ADD NEW RESTAURANT 時，要點文字才能新增餐廳，點文字外的按鈕區域範圍內，會跳 not found-->
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="true">
-                        Dropdown button
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        aria-expanded="true">SORT
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/?sort-by=name&order=1">A to Z</a>
+                        <a class="dropdown-item" href="/?sort-by=name&order=-1">Z to A</a>
+                        <a class="dropdown-item" href="/?sort-by=_id&order=-1">Latest</a>
+                        <a class="dropdown-item" href="/?sort-by=_id&order=-1">Oldest</a>
+                        <a class="dropdown-item" href="/?sort-by=rating&order=-1">Rating</a>
+                    </div>
                 </div>
+
             </div>
 
 

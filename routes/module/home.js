@@ -4,9 +4,12 @@ const Restaurant = require('../../models/restaurant')
 
 //顯示首頁
 router.get('/', (req, res) => {
+    //const sortBy = data.sortBy
+    //const order = data.sortType
+
     Restaurant.find()
         .lean()
-        .sort({ name: 'asc' })
+        .sort({ name: '1' })
         .then(restaurants => res.render('index', { restaurants }))
         .catch(error => console.error(error))
 
