@@ -17,10 +17,10 @@ router.get('/', (req, res) => {
 
 //search功能get
 router.get('/search', (req, res) => {
-    //問題點1
-    /*if (!req.query.keyword) {
-        res.redirect('/')
-    }*/
+    //問題點1-兩個res導致的問題，加上return中斷程式就可以了
+    if (!req.query.keyword) {
+        return res.redirect('/')
+    }
     const input = req.query.keyword
     const keyword = input.split(" ").join("").toLowerCase()
     const noResultMessage = "查無資料，請更換關鍵字或點擊放大鏡回到首頁"

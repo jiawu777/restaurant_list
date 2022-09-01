@@ -1,0 +1,32 @@
+<div class="container mt-5 d-grid gap-2 col-6 mx-auto">
+
+    <form action="/register" method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="name" class="form-control" id="name" aria-describedby="name" placeholder="Root">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="abc@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="password">
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="confirmPassword" class="form-control" id="confirmPassword" placeholder="password">
+        </div>
+        <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary mt-3 btn-block ">Register</button>
+        </div>
+
+    </form>
+    <div class="d-flex">
+        <h5>Got An Account? </h5><a href="/users/login">
+            <h5 class="mx-3">Login Right Now!</h5>
+        </a>
+    </div>
+
+
+</div>
