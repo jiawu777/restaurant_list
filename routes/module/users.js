@@ -15,10 +15,31 @@ router.get('/register', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-
+    const { name, email, password, confirmPassword } = req.body
+    User.findOne({ email }).then(user => {
+        if (user) {
+            console.log('User already exists.')
+            res.render('register', {
+                name,
+                email,
+                password,
+                confirmPassword
+            })
+        } else {
+            console.log(user)
+            return User.create({
+                name,
+                email,
+                password
+            })
+                .then(() => res.redirect('/users/login'))
+                .catch(err => console.log(err))
+        }
+    })
+        .catch(err => console.log(err))
 })
 
-router.get('/logout',(req,res)=>{
-    
+router.get('/logout', (req, res) => {
+
 })
 module.exports = router
