@@ -3,11 +3,13 @@
     <form action="/users/login" method="POST">
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="abc@example.com">
+            <input name="email" type="email" class="form-control" id="email" aria-describedby="email"
+                placeholder="abc@example.com" value="{{email}}">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="password">
+            <input name="password" type="password" class="form-control" id="password" placeholder="password"
+                value="{{password}}">
         </div>
         <div class="mb-3 ">
             <button type="submit" class="btn btn-primary mt-3 btn-block ">Login</button>

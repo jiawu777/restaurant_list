@@ -5,8 +5,11 @@ const bodyParser = require('body-parser')//載入body-parse把URL-encoded轉譯�
 const methodOverride = require('method-override')//載入method override
 const session = require('express-session')
 
+const usePassport = require('./config/passport')
+
 const routes = require('./routes')//預設直接找index可省略
 require('./config/mongoose')//載入mongoose
+
 
 const app = express()
 
@@ -20,6 +23,7 @@ app.use(session({
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))//用app.use規定每筆請求都需要透過body-parser進行前置處理
 app.use(methodOverride('_method'))//用methodOverride把程式碼Restful化
+usePassport(app)
 app.use(routes)//使用路由器
 app.listen(3000, () => {
     console.log(`Express is running on http://localhost:3000`)
