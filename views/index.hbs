@@ -19,20 +19,26 @@
                         </div>
                     </div>
                 </form>
-
-                <!--新增下拉式選單供排序 ADD NEW RESTAURANT 時，要點文字才能新增餐廳，點文字外的按鈕區域範圍內，會跳 not found-->
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-expanded="true">SORT
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/?sort-by=name&order=1">A to Z</a>
-                        <a class="dropdown-item" href="/?sort-by=name&order=-1">Z to A</a>
-                        <a class="dropdown-item" href="/?sort-by=_id&order=-1">Latest</a>
-                        <a class="dropdown-item" href="/?sort-by=_id&order=1">Oldest</a>
-                        <a class="dropdown-item" href="/?sort-by=rating&order=-1">Rating</a>
+                <div class="d-flex justify-content-end">
+                    <!--修正點擊 ADD NEW RESTAURANT 時，要點文字才能新增餐廳，點文字外的按鈕區域範圍內，會跳 not found-->
+                    <a class="btn btn-major mx-2" href="./restaurants/new" style="color:white;">CREATE
+                    </a>
+                    <!--新增下拉式選單供排序 ADD NEW RESTAURANT 時，要點文字才能新增餐廳，點文字外的按鈕區域範圍內，會跳 not found-->
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-expanded="true">SORT
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/?sort-by=name&order=1">A to Z</a>
+                            <a class="dropdown-item" href="/?sort-by=name&order=-1">Z to A</a>
+                            <a class="dropdown-item" href="/?sort-by=_id&order=-1">Latest</a>
+                            <a class="dropdown-item" href="/?sort-by=_id&order=1">Oldest</a>
+                            <a class="dropdown-item" href="/?sort-by=rating&order=-1">Rating</a>
+                        </div>
                     </div>
                 </div>
+
+
 
             </div>
 

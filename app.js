@@ -24,6 +24,11 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))//用app.use規定每筆請求都需要透過body-parser進行前置處理
 app.use(methodOverride('_method'))//用methodOverride把程式碼Restful化
 usePassport(app)
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.isAuthenticated
+    res.locals.user = req.user
+    next()
+})
 app.use(routes)//使用路由器
 app.listen(3000, () => {
     console.log(`Express is running on http://localhost:3000`)
