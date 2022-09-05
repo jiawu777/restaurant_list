@@ -5,14 +5,14 @@ const User = require('../models/user')
 module.exports = app => {
     app.use(passport.initialize())
     app.use(passport.session())
-    passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+    passport.use(new LocalStrategy({ usernameField: 'email', passReqToCallback: true }, (req, email, password, done) => {
         User.findOne({ email })
             .then(user => {
                 if (!user) {
-                    return done(null, false, { message: 'Email not registered!' })
+                    return done(null, false, req.flash('warning_msg', '此信箱未被註冊!'))
                 }
                 if (user.password !== password) {
-                    return done(null, false, { message: 'Email or Password incorrect!' })
+                    return done(null, false, req.flash('warning_msg', 'Email 或 密碼 不正確'))
                 }
                 return done(null, user)
             })
