@@ -6,6 +6,7 @@ const methodOverride = require('method-override')//載入method override
 const session = require('express-session')
 const flash = require('connect-flash')
 
+
 const usePassport = require('./config/passport')
 
 const routes = require('./routes')//預設直接找index可省略
