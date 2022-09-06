@@ -18,20 +18,25 @@ npm init -y
 npm i express express-handlebars
 ```
 
-* 登入mongodb資料庫
-process.env.MONGODB_URI 環境變數的設定
+* 設定env變數
+請參考.env.example檔案設定FB、Mongoose環境變數，並將檔名改為.env
 ```
-set MONGODB_URI = <連線 mongoDB的URI> //密碼、資料庫名稱請自行修改
+FACEBOOK_ID = SKIP
+FACEBOOK_SECRET = SKIP
+FACEBOOK_CALLBACK='http://localhost:3000/auth/facebook/callback'
+SESSION_SECRET='MySecret'
+MONGODB_URI='mongodb+srv://admin:admin@cluster0.txrrx.mongodb.net/restaurant_list?retryWrites=true&w=majority'
+PORT=3000
 ```
-* 運行種子數據
+* 運行種子數據，執行成功將回傳 restaurantSeeder done!
 ```
-node models/seeds/restaurantSeeder.js
+npm run seed
 ```
 
 * 執行app.js
 
 ```
-nodemon app.js
+npm run dev
 ```
 * 執行成功將顯示以下字樣，即可點入連結使用網站 http://localhost:3000/
 ```
@@ -46,9 +51,18 @@ Express is running on http://localhost:3000
 
 ## package - 使用套件
 
-* express v4.17.1
-* express - handlebars v4.0.2
-* bootstrap v4.6.x
+* bcryptjs: v2.4.3
+* body-parser: v1.20.0
+* connect-flash: v0.1.1
+* dotenv: v16.0.2
+* express: v4.17.1
+* express-handlebars: v4.0.2
+* express-session: v1.17.3
+* method-override: v3.0.0
+* mongoose: v6.3.5
+* passport: v0.4.1
+* passport-facebook: v3.0.0
+* passport-local: v1.0.0
 
 ## Authors
 

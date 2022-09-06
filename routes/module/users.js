@@ -36,30 +36,29 @@ router.post('/register', (req, res) => {
             confirmPassword
         })
     }
-    User.findOne({ email }).then(user => {
-        if (user) {
-            errors.push({ message: '此Email已被註冊' })
-            return res.render('register', {
-                errors,
-                name,
-                email,
-                password,
-                confirmPassword
-            })
-        } else {
-            return bcrypt
-                .genSalt(10)
-                .then(salt => bcrypt.hash(password, salt))
-                .then(hash => User.create({
+    User.findOne({ email })
+        .then(user => {
+            if (user) {
+                errors.push({ message: '此Email已被註冊' })
+                return res.render('register', {
+                    errors,
                     name,
                     email,
-                    password: hash
-                }))
+                    password,
+                    confirmPassword
+                })
+            } else {
+                return User
+                    .create({
+                        name,
+                        email,
+                        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+                    })
+                    .then(() => res.redirect('/users/login'))
+                    .catch(err => console.log(err))
 
-                .then(() => res.redirect('/users/login'))
-                .catch(err => console.log(err))
-        }
-    })
+            }
+        })
         .catch(err => console.log(err))
 })
 

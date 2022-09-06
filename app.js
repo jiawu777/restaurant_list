@@ -5,12 +5,14 @@ const bodyParser = require('body-parser')//載入body-parse把URL-encoded轉譯�
 const methodOverride = require('method-override')//載入method override
 const session = require('express-session')
 const flash = require('connect-flash')
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 
 
 const usePassport = require('./config/passport')
 
 const routes = require('./routes')//預設直接找index可省略
-const { use } = require('passport')
 require('./config/mongoose')//載入mongoose
 
 
@@ -19,7 +21,7 @@ const app = express()
 app.use(express.static('public'))//設定靜態檔案(未更動)
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))//設定模板引擎
 app.use(session({
-    secret: 'ThisIsMySecret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }))
