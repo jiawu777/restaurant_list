@@ -30,25 +30,22 @@ db.once('open', () => {
     Promise
         .all(SEED_USER.map(user => {
             const { name, email, password, indexField } = user
-
-            return User.create(
-                {
-                    name,
-                    email,
-                    password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-                    /*bcrypt.hash takes a callback as its third parameter which will be called when the hash is completed. bcrypt.hashSync runs the hash, waits for it to complete and returns the hashed value.*/
-                })
-                .then(user => {
-
+            return User.create({
+                name,
+                email,
+                password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+                /*bcrypt.hash takes a callback as its third parameter which will be called when the hash is completed. bcrypt.hashSync runs the hash, waits for it to complete and returns the hashed value.*/
+            })
+                .then((user) => {
+                    const userId = user._id
                     const restaurants = indexField.map(index => {
-                        const restaurant = restaurantList[index]
-                        restaurant.userId = user._id
+                        const restaurant = ({ ...restaurantList[index], userId })
                         return restaurant
                     })
                     return Restaurant.create(restaurants)
                 })
+                .catch(err => console.log(err))
         })
-
         )
         .then(() => {
             console.log('restaurantSeeder done!')

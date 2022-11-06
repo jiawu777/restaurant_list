@@ -24,18 +24,23 @@ router.get('/search', (req, res) => {
     const input = req.query.keyword
     const keyword = input.split(" ").join("").toLowerCase()
     const noResultMessage = "查無資料，請更換關鍵字或點擊放大鏡回到首頁"
-    return Restaurant.find({})
-        .lean()
-        .then(restaurants => {
-            const filteredRestaurants = restaurants.filter((item) => {
-                return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword)
-            })
-            filteredRestaurants.length ? res.render('index', { restaurants: filteredRestaurants, keyword: input }) : res.render('index', { noResultMessage, keyword: input })
+    const name = req.params.name
+    return Restaurant.find({ $or: [{ [name]: keyword }, { [category]: keyword }] }, (restaurants => {
+        restaurants.length ? res.render('index', { restaurants, keyword: input }) : res.render('index', {
+            noResultMessage, keyword: input
         })
-        .catch(error => console.error(error))
+            /*.lean()
+            .then(restaurants => {
+                const filteredRestaurants = restaurants.filter((item) => {
+                    return item.name.toLowerCase().includes(keyword) || item.category.includes(keyword)
+                })
+                filteredRestaurants.length ? res.render('index', { restaurants: filteredRestaurants, keyword: input }) : res.render('index', { noResultMessage, keyword: input })
+            })*/
+            .catch(error => console.error(error))
+    })
+    )
+
+    module.exports = router
 })
-
-module.exports = router
-
 
 

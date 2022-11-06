@@ -49,21 +49,6 @@ Express is running on http://localhost:3000
 * Nodejs v16.15.0
 * nodemon @2.0.16
 
-## package - 使用套件
-
-* bcryptjs: v2.4.3
-* body-parser: v1.20.0
-* connect-flash: v0.1.1
-* dotenv: v16.0.2
-* express: v4.17.1
-* express-handlebars: v4.0.2
-* express-session: v1.17.3
-* method-override: v3.0.0
-* mongoose: v6.3.5
-* passport: v0.4.1
-* passport-facebook: v3.0.0
-* passport-local: v1.0.0
-
 ## Authors
 
 * **ALPHA Camp** - *Initial work*
